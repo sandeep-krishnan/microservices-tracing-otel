@@ -6,9 +6,10 @@ services:
       context: .
     container_name: cart-app
     environment:
-      order.url: http://order-app:8080
+      order_url: http://order-app:8080
       spring.application.name: cart-service
-      spring.sleuth.otel.exporter.otlp.endpoint: http://otel-collector:4317
+      OTEL_RESOURCE_ATTRIBUTES=service.name: cart-service
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector:4317
       spring.sleuth.otel.config.trace-id-ratio-based: 1
       logging.level.root: info
     ports:
@@ -21,7 +22,8 @@ services:
     environment:
       spring.application.name: order-service
       logging.level.root: info
-      spring.sleuth.otel.exporter.otlp.endpoint: http://otel-collector:4317
+      OTEL_RESOURCE_ATTRIBUTES=service.name: order-service
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector:4317
       spring.sleuth.otel.config.trace-id-ratio-based: 1
 
   otel-collector:
